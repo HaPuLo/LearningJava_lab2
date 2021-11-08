@@ -25,6 +25,16 @@ public class Ass1_luckyNumber {
         do{
             System.out.print("Your guess? ");
             int guessNumber = sc.nextInt();
+            if(!(guessNumber >=0) && !(guessNumber <=100)){
+                while(!(guessNumber >=0) && !(guessNumber <=100)){
+                    System.out.println("Please input the number 0 to 100 ");
+                    System.out.print("Your guess? ");
+                    guessNumber = sc.nextInt();
+                    if ((guessNumber >=0) && (guessNumber <=100)){
+                        break;
+                    }
+                }
+            }
             gameGuess +=1;
             //Check the number to see if it's valid
             if (guessNumber > randomNumber){
@@ -43,24 +53,50 @@ public class Ass1_luckyNumber {
                 }else if(gameGuess < bestGame){
                     bestGame = gameGuess;
                 }
+
                 //Do you want to play again
                 System.out.print("Do you want to play again ?");//Match the number
                 String s = sc.next();
                 s = s.toLowerCase();
-                if (s.equals("y") || s.equals("yes") || s.equals("co")) {
-                    gameGuess = 0;
-                    totalGames +=1;
-                    validNumberNotFound = true;
-                } else if (s.equals("n") || s.equals("no") || s.equals("khong")) {
-                    guessAvg = (double) totalGuess / (double)totalGames;
-                    //Print report
-                    report(totalGames,totalGuess,guessAvg,bestGame);
-                    totalGuess = 0;
-                    totalGames = 0;
-                    validNumberNotFound = false;
-                } else{
+                if ((s.equals("y") || s.equals("yes") || s.equals("co")
+                        ||s.equals("n") || s.equals("no") || s.equals("khong"))){
+                    if (s.equals("y") || s.equals("yes") || s.equals("co")) {
+                        gameGuess = 0;
+                        totalGames += 1;
+                        validNumberNotFound = true;
+                    } else if (s.equals("n") || s.equals("no") || s.equals("khong")) {
+                        guessAvg = (double) totalGuess / (double) totalGames;
+                        //Print report
+                        report(totalGames, totalGuess, guessAvg, bestGame);
+                        totalGuess = 0;
+                        totalGames = 0;
+                        validNumberNotFound = false;
+                    }
+                }else{
                     //User in put again
+                    while (!(s.equals("y") || s.equals("yes") || s.equals("co")
+                            ||s.equals("n") || s.equals("no") || s.equals("khong"))) {
+                        System.out.print("You need to key \"yes\" or \"no\" ");
+                        System.out.print("Do you want to play again ?");//Match the number
+                        s = sc.next();
+                        s = s.toLowerCase();
+                        if (s.equals("y") || s.equals("yes") || s.equals("co")) {
+                            gameGuess = 0;
+                            totalGames += 1;
+                            validNumberNotFound = true;
+                            break;
+                        } else if (s.equals("n") || s.equals("no") || s.equals("khong")) {
+                            guessAvg = (double) totalGuess / (double) totalGames;
+                            //Print report
+                            report(totalGames, totalGuess, guessAvg, bestGame);
+                            totalGuess = 0;
+                            totalGames = 0;
+                            validNumberNotFound = false;
+                            break;
+                        }
+                    }
                 }
+
             }
         }while (validNumberNotFound);
     }
